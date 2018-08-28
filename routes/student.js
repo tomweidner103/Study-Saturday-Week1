@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 
 // Get Student by Id
 router.get('/:id', function(req, res, next) {
-  let student = students.filter(person => person.id === req.params.id);
+  let student = students.filter(person => person.id === +req.params.id);
   res.json({ student });
 });
 
@@ -42,7 +42,7 @@ router.delete('/:id', function(req, res, next) {
 
 // Update Student
 router.put('/:id', function(req, res, next) {
-  let updatedStudent = students.filter(person => person.id === req.params.id);
+  let updatedStudent = students.filter(person => person.id === +req.params.id);
   updatedStudent.name = req.body.name;
   students[req.params.id] = updatedStudent;
   res.json({ students });
