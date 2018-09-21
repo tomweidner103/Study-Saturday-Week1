@@ -9,7 +9,7 @@
 	```
 		Test {id : 0, score: 99, subject : 'Physics', studentID : 2}
     	Student {id : 0, name : 'Ashi'}
-	```
+
 	- Necessary routes:
 
 		- Get all students
