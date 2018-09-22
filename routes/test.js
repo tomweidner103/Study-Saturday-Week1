@@ -11,13 +11,13 @@ let tests = [
 
 // Get Tests
 router.get('/', function(req, res, next) {
-  res.json({ tests });
+  res.json(tests);
 });
 
 // Get Test by Id
 router.get('/:id', function(req, res, next) {
   let test = tests.filter(test => test.id === +req.params.id);
-  res.json({ test });
+  res.json(test);
 });
 
 // Add Score
@@ -30,24 +30,26 @@ router.post('/', function(req, res, next) {
     subject: req.body.subject,
   };
   tests.push(test);
-  res.json({ tests });
+  res.json(tests);
 });
 
 // Delete Score
 router.delete('/:id', function(req, res, next) {
-  let newScores = tests.filter(score => score.id != req.params.id);
+  let newScores = tests.filter(score => score.id !==  +req.params.id);
   tests = newScores;
-  res.json({ tests });
+  res.json(tests);
 });
 
 // Update Score
 router.put('/:id', function(req, res, next) {
-  let updatedScore = tests.filter(score => score.id === +req.params.id)[0];
-  updatedScore.score = req.body.score;
-  updatedScore.studentId = req.body.studentId;
-  updatedScore.subject = req.body.subject;
-  tests[req.params.id] = updatedScore;
-  res.json({ tests });
+  tests.map(score => {
+    if (score.id === +req.params.id) {
+      score.score = req.body.score;
+      score.studentId = req.body.studentId;
+      score.subject = req.body.subject;
+    }
+  });
+  res.json(tests);
 });
 
 module.exports = router;

@@ -13,13 +13,13 @@ let students = [
 
 // Get Students
 router.get('/', function(req, res, next) {
-  res.json({ students });
+  res.json(students);
 });
 
 // Get Student by Id
 router.get('/:id', function(req, res, next) {
   let student = students.filter(person => person.id === +req.params.id);
-  res.json({ student });
+  res.json(student);
 });
 
 // Add Student
@@ -30,22 +30,24 @@ router.post('/', function(req, res, next) {
     name: req.body.name,
   };
   students.push(student);
-  res.json({ students });
+  res.json(students);
 });
 
 // Delete Student
 router.delete('/:id', function(req, res, next) {
-  let newClass = students.filter(person => person.id != req.params.id);
+  let newClass = students.filter(person => person.id !== +req.params.id);
   students = newClass;
-  res.json({ students });
+  res.json(students);
 });
 
 // Update Student
 router.put('/:id', function(req, res, next) {
-  let updatedStudent = students.filter(person => person.id === +req.params.id);
-  updatedStudent.name = req.body.name;
-  students[req.params.id] = updatedStudent;
-  res.json({ students });
+  students.map(person => {
+    if (person.id === +req.params.id) {
+      person.name = req.body.name;
+    }
+  });
+  res.json(students);
 });
 
 module.exports = router;
