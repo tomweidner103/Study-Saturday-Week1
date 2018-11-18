@@ -5,20 +5,19 @@ const router = express.Router()
 const{Student} = require('../models/Student')
 
 
-
+//get students
 router.get('/', async (req,res,next)=>{
-    const student = await Student.findOne({
-        where:{
-            id: 1
-        }
-    })
-
-    res.send(student)
+    const student = await Student.findAll()
+    res.json(student)
 
 })
-// .post((req,res,next)=>{
+.post( async(req,res,next)=>{
+    const addStudent = await Student.create({
+        name: 'Andrew'
+    });
+    res.send(addStudent)
 
-// })
+})
 
 // router.route('/:id')
 // .get((req,res,next)=>{
