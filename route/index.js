@@ -4,28 +4,32 @@ const express = require('express')
 const router = express.Router()
 const{Student} = require('../models/Student')
 
-
-//get students
-router.get('/', async (req,res,next)=>{
-    const student = await Student.findAll()
-    res.json(student)
-
+//add student, make sure to do this first
+router.route('/')
+.post((req,res,next)=>{
+    Student.create(req.body)
+    .then(student => res.json(student))
 })
-.post( async(req,res,next)=>{
-    const addStudent = await Student.create({
-        name: 'Andrew'
-    });
-    res.send(addStudent)
-
+//get all students
+.get((req,res,next)=>{
+    Student.findAll()
+    .then(students => res.json(students))
 })
 
-// router.route('/:id')
-// .get((req,res,next)=>{
-
-// })
-// .put((req,res,next)=>{
-
-// })
+router.route('/:id')
+.put((req,res,next)=>{
+    Student.update({
+        name:req.body.name
+    },
+    {
+        where: {
+            name: req.params.id
+        }
+    })
+    .then((update)=>{
+        res.json(update)
+    })
+})
 // .delete((req,res,next)=>{
 
 // })
